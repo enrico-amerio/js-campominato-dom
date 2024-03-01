@@ -39,33 +39,29 @@ startBtn.addEventListener('click', function(){
         console.log("points", points);
         console.log(box._boxNum);
       }
-       if(bombs.includes(box._boxNum)) {
-      //   for (let i = 0; i < cellNumbers; i++){
-      //     box = box[i]
-      //     if (bombs.includes(box._boxNum)){
-            box.classList.add('bomb');
-            setTimeout(gameOver, 300)
-            //     }else{
-              //       box.classList.add('clicked');
-              //    }
-              
-              //   }
-              
-              
-              
-            }
-          })
-        };
-      });
-
-      
-      function genBox([i]) {
-        const box = document.createElement("div");
-        box.classList.add('box');
-        box._boxNum = i + 1;
-        return box;
-        
+      if(bombs.includes(box._boxNum)) {
+         const boxes = document.querySelectorAll('.box')
+         for (let i = 0; i < cellNumbers; i++){
+           if (bombs.includes(boxes[i]._boxNum)){
+            boxes[i].classList.add('bomb');
+          }else{
+            boxes[i].classList.add('clicked');
+          }
+        }
+        setTimeout(gameOver, 300)
       }
+    })
+  };
+});
+
+
+function genBox([i]) {
+  const box = document.createElement("div");
+  box.classList.add('box');
+  box._boxNum = i + 1;
+  return box;
+  
+}
       function gameOver() {
         alert('HAI PERSO')
         
