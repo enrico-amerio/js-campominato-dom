@@ -8,6 +8,7 @@ const audioClick = new Audio('sounds/click.wav');
 const audioBomb = new Audio('sounds/explosion.wav');
 const audioOver = new Audio('sounds/game-over-voice.wav');
 const audioWin = new Audio('sounds/jingle_win.wav');
+const audioLoop = new Audio('sounds/music-loop.mp3')
 const score = document.getElementById('points'); 
 const refreshBtn = document.getElementById("refresh-btn");
 
@@ -17,14 +18,18 @@ startBtn.addEventListener('click', function(){
   const cellNumbers = levels[difficultyOptions.value];
   const difficulty = difficultyOptions.value;
   let points = 0;
-  score.innerHTML = `${points}`
+  score.innerHTML = `${points}`;
   const bombs = [];
   startBtn.innerText = 'Restart';
+  audioLoop.play();
+  audioLoop.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
   
   while (bombs.length < 16){
     bomba = Math.floor(Math.random() * cellNumbers) + 1;
     validBomb = bombs.includes(bomba);
-    console.log(bombs);
     if(!validBomb ){
       bombs.push(bomba)}
     }
@@ -46,7 +51,6 @@ startBtn.addEventListener('click', function(){
         points++
         score.innerHTML = `${points}`
       }
-      console.log(points);
       if (points == cellNumbers - 16){
         setTimeout(gameWin, 1000)
       }
@@ -78,11 +82,13 @@ function genBox([i]) {
   return box;
 }
 function gameOver() {
+  audioLoop.pause();
   audioOver.play();
   endGame.classList.remove('d-none');
   popup.innerHTML = "HAI PERSO";
 }
 function gameWin() {
+  audioLoop.pause();
   audioWinplay();
   endGame.classList.remove('d-none');
   popup.innerHTML = "HAI VINTO";
